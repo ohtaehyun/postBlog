@@ -1,0 +1,8 @@
+html,
+body {
+  height: 100vh;
+}
+
+.color-primary {
+  background-color: #6c5ce7;
+}
