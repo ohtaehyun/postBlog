@@ -1,3 +1,4 @@
 myve
 *.log
 *.a
+.vscode
