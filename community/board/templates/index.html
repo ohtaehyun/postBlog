@@ -1,0 +1,47 @@
+{% extends 'base.html' %} {% block content %} {% load static %}
+<link rel="stylesheet" href="{% static 'index.css' %}" />
+<div class="container-fluid hero h-100 min-vh-100">
+  <div class="row content">
+    <div class="col-md-6 greeting text-concrete text">
+      <h1>Sign in</h1>
+      <h1>For Comment</h1>
+      <br /><br />
+      <p>
+        if(&nbsp signIn==True &nbsp){<br />
+        &nbsp&nbsp&nbsp&nbsp Comment = new Comment(); <br />
+        }&nbsp else{ <br />
+        &nbsp&nbsp&nbsp&nbsp just keep looking;<br />
+        }
+      </p>
+    </div>
+    <div class="col-md-6 sign-in">
+      <div class="container col-md-10 col-10">
+        <form class="bubble" method="POST" action="signIn">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input
+              type="email"
+              class="form-control"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              placeholder="Enter email"
+            />
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="exampleInputPassword1"
+              placeholder="Password"
+            />
+          </div>
+          <button type="submit" class="btn color-primary">Sign in</button>
+          <a href="comuUser/signUp" class="float-right">you don't have account?</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

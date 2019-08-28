@@ -1,11 +1,11 @@
 from django.contrib import admin
-from .models import comuUser
+from .models import CommuUser
 
 # Register your models here.
 
 
 class comuUserAdmin(admin.ModelAdmin):
-    list_display = ['userId', 'userPassword', 'userEmail', 'signUpDate']
+    list_display = ['userName', 'userEmail', 'userPassword']
 
 
-admin.site.register(comuUser, comuUserAdmin)
+admin.site.register(CommuUser, comuUserAdmin)
