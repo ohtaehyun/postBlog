@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.hashers import make_password
 from .models import CommuUser
@@ -24,6 +24,7 @@ def signUp(request):
                 userPassword=make_password(userPassword)
             )
             commuUser.save()
+            return redirect("../../")
         return render(request, "signUp.html", err_msg)
 
     else:
