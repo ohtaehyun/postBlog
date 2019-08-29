@@ -6,6 +6,12 @@ from comuUser.models import CommuUser
 # Create your views here.
 
 
+def signOut(request):
+    if request.session.get('user'):
+        del(request.session['user'])
+    return redirect('../')
+
+
 def review(request):
     return render(request, "review.html")
 
@@ -16,7 +22,7 @@ def study(request):
 
 def home(request):
     msg = {}
-    if request.session.session_key is not None:
+    if request.session.get('user'):
         msg['msg'] = request.session['user']
         user = CommuUser.objects.get(id=request.session['user'])
         msg['name'] = user.userName

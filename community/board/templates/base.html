@@ -33,6 +33,15 @@
               <li class="nav-item">
                 <a class="nav-link" href="review">Review</a>
               </li>
+              {% if name %}
+              <li class="nav-item">
+                <a class="nav-link" href="signOut">Sign Out</a>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="signIn">Sign in</a>
+              </li>
+              {% endif %}
             </ul>
           </div>
         </nav>
