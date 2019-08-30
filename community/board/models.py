@@ -5,7 +5,8 @@ from django.db import models
 
 class category(models.Model):
     categoryId = models.AutoField(primary_key=True, verbose_name="카테고리Id")
-    categoryName = models.TextField(max_length="30", verbose_name="카테고리명")
+    categoryName = models.TextField(
+        max_length="30", verbose_name="카테고리명", unique=True)
 
 
 class post(models.Model):
@@ -20,7 +21,7 @@ class post(models.Model):
 
 
 class comment(models.Model):
-    commentId = models.AutoField(primary_key="true", verbose_name="댓글번호")
+    commentId = models.AutoField(primary_key=True, verbose_name="댓글번호")
     commentContent = models.TextField(max_length="150", verbose_name="댓글내용")
     targetPost = models.ForeignKey(post, on_delete="models.CASCADE")
     author = models.ForeignKey(

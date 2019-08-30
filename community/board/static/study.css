@@ -10,6 +10,8 @@
 }
 .container.col-md-2.col-2 {
   border-right: 1px solid rgba(0, 0, 0, 0.1);
+  max-height: 100vh;
   min-height: 100vh;
-  overflow: hidden;
+  overflow: auto;
+  padding-bottom: 60px;
 }

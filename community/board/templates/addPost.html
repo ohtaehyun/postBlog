@@ -1,0 +1,52 @@
+{% extends 'base.html' %} {% block content %} {% load static %}
+<link rel="stylesheet" href="{% static 'addPost.css' %}" />
+<div class="row justify-content-center">
+  <div class="container col-md-9 col-9">
+    <form method="POST" action="">
+    {% csrf_token %}
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label
+            class="input-group-text color-primary text-white"
+            for="categoryName"
+            >Category</label
+          >
+        </div>
+        <select
+          class="custom-select"
+          id="categoryName"
+          required
+          name="categoryName"
+        >
+        {% for cate in cates  %}
+         <option value={{cate.categoryName}}>{{cate.categoryName}}</option>
+        {% endfor %}          
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="postTitle">Title</label>
+        <input
+          type="text"
+          class="form-control"
+          id="postTitle"
+          placeholder="Enter Title"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="postContent">Content</label>
+        <textarea
+          class="form-control"
+          id="postContent"
+          placeholder="you can use <br> <pStart>"
+        ></textarea>
+      </div>
+      <button type="submit" class="btn color-primary float-right">
+        작성
+      </button>
+    </form>
+  </div>
+</div>
+
+{% endblock content %}

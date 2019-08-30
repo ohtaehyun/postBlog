@@ -2,6 +2,7 @@ html,
 body {
   overflow: hidden;
   min-height: 100vh;
+  max-height: 100vh;
 }
 .container,
 .container-fluid,
@@ -30,6 +31,10 @@ body {
 
 .text-concrete {
   color: #2c3e50;
+}
+
+.text-white {
+  color: white;
 }
 .header {
   height: 70px;

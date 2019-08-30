@@ -4,15 +4,18 @@
   <div class="row max-vw-100">
     <div class="container col-md-2 col-2">
       <nav class="nav flex-column study-nav">
-        <a class="nav-link active" href="#">Web</a>
-        <a class="nav-link" href="#">Something</a>
-        <a class="nav-link" href="#">Something</a>
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"
-          >Disabled Something</a
-        >
+      {% for cate in cate_list  %}
+        <a class="nav-link " href="#">{{cate.categoryName}}</a>
+      {% endfor %}
+      {% ifequal name "othdev95" %}
+        <a class="nav-link" href="addCategory">Add Category</a>
+        <a class="nav-link" href="addPost">Add Post</a>
+      {% endifequal %}
       </nav>
     </div>
-    <div class="container col-md-10 col-10"></div>
+    <div class="container col-md-10 col-10">
+
+    </div>
   </div>
 </div>
 {% endblock %}
