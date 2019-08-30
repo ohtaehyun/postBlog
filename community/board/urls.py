@@ -1,4 +1,4 @@
-
+from django.conf.urls import handler404
 from django.urls import path
 from . import views
 urlpatterns = [
@@ -9,3 +9,4 @@ urlpatterns = [
     path('signOut', views.signOut),
     path('signIn', views.signIn)
 ]
+# handler404 = views.error_404

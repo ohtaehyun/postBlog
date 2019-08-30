@@ -1,0 +1,15 @@
+.study-nav a.nav-link {
+  color: gray;
+  padding: 10px;
+  font-weight: 600;
+}
+
+.study-nav a.nav-link:hover {
+  color: #2c3e50;
+  padding: 10px;
+}
+.container.col-md-2.col-2 {
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  min-height: 100vh;
+  overflow: hidden;
+}

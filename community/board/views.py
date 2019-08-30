@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.hashers import check_password
 from comuUser.models import CommuUser
@@ -13,11 +13,22 @@ def signOut(request):
 
 
 def review(request):
-    return render(request, "review.html")
+    msg = {}
+    if request.session.get('user'):
+        msg['msg'] = request.session['user']
+        user = CommuUser.objects.get(id=request.session['user'])
+        msg['name'] = user.userName
+    return render(request, "review.html", msg)
 
 
 def study(request):
-    return render(request, "study.html")
+    msg = {}
+
+    if request.session.get('user'):
+        msg['msg'] = request.session['user']
+        user = CommuUser.objects.get(id=request.session['user'])
+        msg['name'] = user.userName
+    return render(request, "study.html", msg)
 
 
 def home(request):
@@ -26,8 +37,8 @@ def home(request):
         msg['msg'] = request.session['user']
         user = CommuUser.objects.get(id=request.session['user'])
         msg['name'] = user.userName
-    else:
-        msg['name'] = "unidentified"
+    # else:
+    #     msg['name'] = "unidentified"
 
     return render(request, "home.html", msg)
 
@@ -40,9 +51,9 @@ def signIn(request):
         err_msg = {}
         user = CommuUser
         if userName:
-            user = CommuUser.objects.get(userName=userName)
+            user = get_object_or_404(CommuUser, userName=userName)
         elif userEmail:
-            user = CommuUser.objects.get(userEmail=userEmail)
+            user = get_object_or_404(CommuUser, userEmail=userEmail)
         else:
             return render(request, 'signIn.html', err_msg)
 
@@ -55,3 +66,10 @@ def signIn(request):
             return render(request, "signIn.html", err_msg)
     else:
         return render(request, 'signIn.html')
+
+
+# def error_404(request, ex):
+#     data = {}
+#     data['exception'] = 'exception'
+
+#     return render(request, "404.html", data)

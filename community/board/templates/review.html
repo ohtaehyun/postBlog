@@ -1,10 +1,18 @@
-{% extends 'base.html' %} {% block content %}
-<div class="container-fluid h-100">
-  <div class="row justify-content-center">
-    <div class="col-md-9 col-9 text-center">
-      <br /><br /><br />
-      <h1> review</h1>
+{% extends 'base.html' %} {% block content %} {% load static %}
+<link rel="stylesheet" href="{% static 'review.css' %}" />
+<div class="container-fluid h-100 study-content">
+  <div class="row max-vw-100">
+    <div class="container col-md-2 col-2">
+      <nav class="nav flex-column study-nav">
+        <a class="nav-link active" href="#">Something</a>
+        <a class="nav-link" href="#">Something</a>
+        <a class="nav-link" href="#">Something</a>
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"
+          >Disabled Something</a
+        >
+      </nav>
     </div>
+    <div class="container col-md-10 col-10"></div>
   </div>
 </div>
 {% endblock %}

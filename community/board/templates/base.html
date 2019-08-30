@@ -17,12 +17,12 @@
 
     {% load static %}
     <link rel="stylesheet" href="{% static 'base.css' %}" />
-    <link rel="stylesheet" href="../static/base.css" />
+    {% comment %} <link rel="stylesheet" href="../static/base.css" /> {% endcomment %}
     <title>othdev95's post blog</title>
   </head>
   <body>
-    <div class="container-fluid h-100 min-vh-100">
-      <header>
+    <div class="container h-100 min-vh-100 min-vw-100 max-vw-100">
+      <header >
         <nav class="navbar color-primary">
           <a href="home" class="navbar-brand">Othdev95</a>
           <div class="">
@@ -46,7 +46,7 @@
           </div>
         </nav>
       </header>
-      <main class="container-fluid">
+      <main class="container min-vw-100 max-vw-100">
         {% block content %} {% endblock %}
       </main>
       <footer></footer>

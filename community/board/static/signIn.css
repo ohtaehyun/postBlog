@@ -19,6 +19,7 @@
 
 .sign-in {
   padding-top: 50px;
+  padding-left: 5vw;
 }
 
 .content {
@@ -27,7 +28,7 @@
 
 .greeting {
   padding-top: 30px;
-  padding-left: 15vw;
+  padding-left: 10vw;
 }
 
 .greeting h1 {

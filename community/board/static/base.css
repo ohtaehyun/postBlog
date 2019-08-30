@@ -1,11 +1,18 @@
 html,
 body {
-  overflow-x: hidden;
+  overflow: hidden;
   min-height: 100vh;
+}
+.container,
+.container-fluid,
+.row {
+  margin: 0;
+  padding: 0;
 }
 .min-vh-100 {
   min-height: 100vh;
 }
+
 .container-fluid,
 .container {
   padding: 0%;
