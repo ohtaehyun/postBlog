@@ -15,6 +15,14 @@ def addPost(request):
         msg['name'] = "othdev95"
         if request.method == "POST":
             #  make post model
+            po = post(
+                categoryId=category.objects.get(
+                    categoryName=request.POST.get("categoryName")),
+                postTitle=request.POST.get("postTitle"),
+                postContent=request.POST.get("postContent"),
+                author=CommuUser.objects.get(userName=msg['name'])
+            )
+            po.save()
 
             return redirect('/study')
         else:
