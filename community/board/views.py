@@ -2,25 +2,46 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib.auth.hashers import check_password
 from comuUser.models import CommuUser
-from .models import post, category
+from .models import post, category, comment
 
 # Create your views here.
 
 
 def postDetail(request, postId):
+
     msg = {}
     cate_list = category.objects.all()
     po = post.objects.get(postId=postId)
+    co_list = comment.objects.filter(targetPost=po)
 
     author = po.author
     po.name = CommuUser.objects.get(id=author.id).userName
+
+    for com in co_list:
+        commentAuthor = com.author
+        com.name = CommuUser.objects.get(id=commentAuthor.id).userName
 
     if request.session.get('user'):
         msg['msg'] = request.session['user']
         user = CommuUser.objects.get(id=request.session['user'])
         msg['name'] = user.userName
+
     msg['cate_list'] = cate_list
     msg['post'] = po
+    msg['comment_list'] = co_list
+    if request.method == "POST":
+        if request.POST.get("commentContent"):
+            co = comment(
+                commentContent=request.POST.get("commentContent"),
+                targetPost=post.objects.get(postId=postId),
+                author=CommuUser.objects.get(userName=msg['name'])
+            )
+            co.save()
+            return redirect(request.get_full_path())
+            # return render(request, 'postDetail.html', msg)
+        else:
+            msg['error'] = "내용을 적으십쇼 HUMAN"
+
     return render(request, 'postDetail.html', msg)
 
 

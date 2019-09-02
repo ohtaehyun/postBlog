@@ -6,3 +6,31 @@
   font-size: 0.8rem;
   display: inline;
 }
+.form-group {
+  padding: 0 10%;
+  margin: 0;
+}
+textarea {
+  width: 100%;
+  font-size: 0.8rem;
+}
+
+.comment-content {
+  font-size: 1rem;
+  display: inline-block;
+}
+
+.comment-meta {
+  font-size: 0.8rem;
+}
+
+.comment {
+  padding: 0%;
+  margin: 0;
+  overflow: hidden;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+.meta {
+  text-align: right;
+}

@@ -1,38 +1,14 @@
-{% extends 'base.html' %} {% block content %} {% load static %}
-<link rel="stylesheet" href="{% static 'study.css' %}" />
-<div class="container-fluid h-100 study-content max-vw-100">
-  <div class="row max-vw-100 ">
-    <div class="container col-md-2 col-2">
-      <nav class="nav flex-column study-nav">
-        {% for cate in cate_list %}
-        <a
-          class="nav-link "
-          href="
-        {% url 'board:key' cate.categoryId %}"
-          >{{ cate.categoryName }}</a
-        >
-        {% endfor %} {% ifequal name "othdev95" %}
-        <a class="nav-link" href="addCategory">Add Category</a>
-        <a class="nav-link" href="addPost">Add Post</a>
+{% extends 'postBase.html' %} {% block detail %}
 
-        {% endifequal %}
-      </nav>
-    </div>
-    <div class="container col-md-10 col-10 ">
-      {% if error %}
-      <h1>{{ error }}</h1>
-      {% endif %}
+<!--  -->
+{% load static %} {% if error%}
 
+<h1>{{ error }}</h1>
+{% endif %} {% for post in posts %}
 
-
-      {% for post in posts %}
-      <a class="" href="{% url 'board:postId' post.postId %}"
-        ><span>{{ post.postTitle }}</span></a
-      >
-      <small>{{ post.postedTime }}, {{ post.name }} posted</small>
-      <div class="divider"></div>
-      {% endfor %}
-    </div>
-  </div>
-</div>
-{% endblock %}
+<a class="" href="{% url 'board:postId' post.postId %}"
+  ><span>{{ post.postTitle }}</span></a
+>
+<small>{{ post.postedTime }}, {{ post.name }} posted</small>
+<div class="divider"></div>
+{% endfor %} {% endblock %}

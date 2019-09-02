@@ -1,4 +1,4 @@
-{% extends 'study.html' %} {% block detail %} {% load static %}
+{% extends 'postBase.html' %} {% block detail %} {% load static %}
 <link rel="stylesheet" href="{% static 'postDetail.css' %}" />
 
 {% if post %}
@@ -18,4 +18,34 @@
   <h1>{{ post.postContent }}</h1>
 </div>
 
+<br />
+<div class="divider"></div>
+
+<div class="post-comment">
+  {% if msg %}
+  <div>
+    <form class="edit-comment" method="POST" action="">
+      {% csrf_token %}
+      <h5>Add Comment</h5>
+      <div class="form-group">
+        <textarea name="commentContent" id="commentContent" rows="5"></textarea>
+      </div>
+      <button type="submit" class="btn color-primary float-right">add</button>
+      {{ error }}
+    </form>
+  </div>
+  <br />
+  <br/>
+  {% endif %} {% for comment in comment_list %}
+  <div class="comment">
+    <h6 class="comment-content">{{ comment.commentContent }}</h6>
+    <div class="meta">
+      <p class=" comment-meta">
+        {{ comment.name }} &nbsp {{ comment.postedTime }} commented
+      </p>
+    </div>
+    <div class="divider"></div>
+  </div>
+  {% endfor %}
+</div>
 {% endif %} {% endblock detail %}
