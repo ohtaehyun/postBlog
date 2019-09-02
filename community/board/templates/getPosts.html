@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% block content %} {% load static %}
 <link rel="stylesheet" href="{% static 'study.css' %}" />
 <div class="container-fluid h-100 study-content max-vw-100">
-  <div class="row max-vw-100">
+  <div class="row max-vw-100 ">
     <div class="container col-md-2 col-2">
       <nav class="nav flex-column study-nav">
         {% for cate in cate_list %}
@@ -18,16 +18,19 @@
         {% endifequal %}
       </nav>
     </div>
-    <div class="container col-md-10 col-10">
+    <div class="container col-md-10 col-10 ">
       {% if error %}
       <h1>{{ error }}</h1>
-      {% endif %} {% for post in posts %}
-      <div class="divider"></div>
-      <small>{{ post.postedTime }}, {{ post.name }} posted</small>
-      <a class="" href=""
+      {% endif %}
+
+
+
+      {% for post in posts %}
+      <a class="" href="{% url 'board:postId' post.postId %}"
         ><span>{{ post.postTitle }}</span></a
       >
-      <br />
+      <small>{{ post.postedTime }}, {{ post.name }} posted</small>
+      <div class="divider"></div>
       {% endfor %}
     </div>
   </div>

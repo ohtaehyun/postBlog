@@ -8,8 +8,9 @@ app_name = "board"
 urlpatterns = [
     path('', views.signIn),
     path('home', views.home),
-    path('study/', views.study, name='key'),
+    path('study/', views.getPosts, name='key'),
     path('study/(?cate<int:key>)', views.getPosts, name='key'),
+    path('post/(?postId<int:postId>)', views.postDetail, name='postId'),
     path('review', views.review),
     path('signOut', views.signOut),
     path('signIn', views.signIn),

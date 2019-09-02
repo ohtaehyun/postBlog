@@ -1,0 +1,21 @@
+{% extends 'study.html' %} {% block detail %} {% load static %}
+<link rel="stylesheet" href="{% static 'postDetail.css' %}" />
+
+{% if post %}
+
+<div class="post-header">
+  <h1 class="post-title text-center">{{ post.postTitle }}</h1>
+
+  <div class="post-meta text-right">
+    <h1>{{ post.postedTime }} 작성</h1>
+    <h1>&nbsp{{ post.name }}</h1>
+    <!-- <h1>{{ post.editedTime }} 수정</h1> -->
+  </div>
+</div>
+<div class="divider"></div>
+
+<div class="post-content">
+  <h1>{{ post.postContent }}</h1>
+</div>
+
+{% endif %} {% endblock detail %}

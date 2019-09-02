@@ -17,11 +17,10 @@
 }
 .container.col-md-10.col-10 {
   font-size: 1.4rem;
-  padding: 5vh;
+  padding: 5vh 10vw;
   max-height: 100vh;
   min-height: 100vh;
   overflow: auto;
-
   padding-bottom: 60px;
 }
 
@@ -30,11 +29,13 @@
   display: block;
   color: black;
   text-decoration: none;
-  padding-bottom: 10px;
   font-weight: 500;
 }
-
+.container.col-md-10.col-10 > small {
+  padding-bottom: 10px;
+}
 .divider {
   height: 1px;
   background-color: rgba(0, 0, 0, 0.1);
+  margin: 10px 0;
 }

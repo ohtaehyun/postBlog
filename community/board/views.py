@@ -7,6 +7,23 @@ from .models import post, category
 # Create your views here.
 
 
+def postDetail(request, postId):
+    msg = {}
+    cate_list = category.objects.all()
+    po = post.objects.get(postId=postId)
+
+    author = po.author
+    po.name = CommuUser.objects.get(id=author.id).userName
+
+    if request.session.get('user'):
+        msg['msg'] = request.session['user']
+        user = CommuUser.objects.get(id=request.session['user'])
+        msg['name'] = user.userName
+    msg['cate_list'] = cate_list
+    msg['post'] = po
+    return render(request, 'postDetail.html', msg)
+
+
 def addPost(request):
     msg = {}
     if CommuUser.objects.get(id=request.session['user']) is None:
@@ -76,17 +93,16 @@ def review(request):
         msg['name'] = user.userName
     return render(request, "review.html", msg)
 
-
-def study(request):
-    msg = {}
-    cate_list = category.objects.all()
-    if request.session.get('user'):
-        msg['msg'] = request.session['user']
-        user = CommuUser.objects.get(id=request.session['user'])
-        msg['name'] = user.userName
-    msg['cate_list'] = cate_list
-
-    return render(request, "study.html", msg)
+# not using anymore
+# def study(request):
+#     msg = {}
+#     cate_list = category.objects.all()
+#     if request.session.get('user'):
+#         msg['msg'] = request.session['user']
+#         user = CommuUser.objects.get(id=request.session['user'])
+#         msg['name'] = user.userName
+#     msg['cate_list'] = cate_list
+#     return render(request, "study.html", msg)
 
 
 def getPosts(request, key=18):
@@ -108,6 +124,7 @@ def getPosts(request, key=18):
         user = CommuUser.objects.get(id=request.session['user'])
         msg['name'] = user.userName
     msg['cate_list'] = cate_list
+    msg['cate_key'] = key
 
     return render(request, "getPosts.html", msg)
 
@@ -121,7 +138,7 @@ def home(request):
     # else:
     #     msg['name'] = "unidentified"
 
-    return render(request, "../home.html", msg)
+    return render(request, "home.html", msg)
 
 
 def signIn(request):
