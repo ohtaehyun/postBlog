@@ -2,3 +2,4 @@ myve
 *.log
 *.a
 .vscode
+community/community/settings.py
