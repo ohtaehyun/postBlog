@@ -15,3 +15,26 @@
   overflow: auto;
   padding-bottom: 60px;
 }
+.container.col-md-10.col-10 {
+  font-size: 1.4rem;
+  padding: 5vh;
+  max-height: 100vh;
+  min-height: 100vh;
+  overflow: auto;
+
+  padding-bottom: 60px;
+}
+
+.container.col-md-10.col-10 > a {
+  font-size: 2rem;
+  display: block;
+  color: black;
+  text-decoration: none;
+  padding-bottom: 10px;
+  font-weight: 500;
+}
+
+.divider {
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.1);
+}

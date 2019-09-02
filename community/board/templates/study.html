@@ -5,7 +5,8 @@
     <div class="container col-md-2 col-2">
       <nav class="nav flex-column study-nav">
       {% for cate in cate_list  %}
-        <a class="nav-link " href="#">{{cate.categoryName}}</a>
+        <a class="nav-link " href="
+        {% url 'board:key' cate.categoryId %}">{{cate.categoryName}}</a>
       {% endfor %}
       {% ifequal name "othdev95" %}
         <a class="nav-link" href="addCategory">Add Category</a>
@@ -14,7 +15,7 @@
       </nav>
     </div>
     <div class="container col-md-10 col-10">
-
+    <h1>this is study</h1>
     </div>
   </div>
 </div>

@@ -13,20 +13,24 @@ def addPost(request):
         return redirect('/')
     elif CommuUser.objects.get(id=request.session['user']).userName == "othdev95":
         msg['name'] = "othdev95"
+        msg['cates'] = category.objects.all()
         if request.method == "POST":
             #  make post model
-            po = post(
-                categoryId=category.objects.get(
-                    categoryName=request.POST.get("categoryName")),
-                postTitle=request.POST.get("postTitle"),
-                postContent=request.POST.get("postContent"),
-                author=CommuUser.objects.get(userName=msg['name'])
-            )
-            po.save()
+            if request.POST.get("postTitle") and request.POST.get("postContent"):
+                po = post(
+                    categoryId=category.objects.get(
+                        categoryName=request.POST.get("categoryName")),
+                    postTitle=request.POST.get("postTitle"),
+                    postContent=request.POST.get("postContent"),
+                    author=CommuUser.objects.get(userName=msg['name'])
+                )
+                po.save()
 
-            return redirect('/study')
+                return redirect('/study')
+            else:
+                msg['error'] = "항목을 모두 입력하십쇼 HUMAN"
+                return render(request, "addPost.html", msg)
         else:
-            msg['cates'] = category.objects.all()
             return render(request, 'addPost.html', msg)
 
     else:
@@ -75,18 +79,37 @@ def review(request):
 
 def study(request):
     msg = {}
-    post_list = post.objects.all()
     cate_list = category.objects.all()
-    print(post_list)
-    print(cate_list)
     if request.session.get('user'):
         msg['msg'] = request.session['user']
         user = CommuUser.objects.get(id=request.session['user'])
         msg['name'] = user.userName
-        print(user.userName)
     msg['cate_list'] = cate_list
 
     return render(request, "study.html", msg)
+
+
+def getPosts(request, key=18):
+    msg = {}
+    post_list = post.objects.filter(categoryId=key)
+    cate_list = category.objects.all()
+    if post_list:
+        for posts in post_list:
+            author = posts.author
+            posts.name = CommuUser.objects.get(id=author.id).userName
+        print(author)
+
+        msg['posts'] = post_list
+    else:
+        msg['error'] = "OOPS! NO POST IN THIS CATEGORY"
+        pass
+    if request.session.get('user'):
+        msg['msg'] = request.session['user']
+        user = CommuUser.objects.get(id=request.session['user'])
+        msg['name'] = user.userName
+    msg['cate_list'] = cate_list
+
+    return render(request, "getPosts.html", msg)
 
 
 def home(request):
@@ -98,7 +121,7 @@ def home(request):
     # else:
     #     msg['name'] = "unidentified"
 
-    return render(request, "home.html", msg)
+    return render(request, "../home.html", msg)
 
 
 def signIn(request):

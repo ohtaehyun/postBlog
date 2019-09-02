@@ -6,6 +6,6 @@ from comuUser import views as comuViews
 from board import views as boardViews
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include("board.urls")),
+    path('', include("board.urls", namespace='key')),
     path('comuUser/', include("comuUser.urls"))
 ]

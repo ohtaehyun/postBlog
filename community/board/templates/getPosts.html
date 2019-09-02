@@ -1,0 +1,35 @@
+{% extends 'base.html' %} {% block content %} {% load static %}
+<link rel="stylesheet" href="{% static 'study.css' %}" />
+<div class="container-fluid h-100 study-content max-vw-100">
+  <div class="row max-vw-100">
+    <div class="container col-md-2 col-2">
+      <nav class="nav flex-column study-nav">
+        {% for cate in cate_list %}
+        <a
+          class="nav-link "
+          href="
+        {% url 'board:key' cate.categoryId %}"
+          >{{ cate.categoryName }}</a
+        >
+        {% endfor %} {% ifequal name "othdev95" %}
+        <a class="nav-link" href="addCategory">Add Category</a>
+        <a class="nav-link" href="addPost">Add Post</a>
+
+        {% endifequal %}
+      </nav>
+    </div>
+    <div class="container col-md-10 col-10">
+      {% if error %}
+      <h1>{{ error }}</h1>
+      {% endif %} {% for post in posts %}
+      <div class="divider"></div>
+      <small>{{ post.postedTime }}, {{ post.name }} posted</small>
+      <a class="" href=""
+        ><span>{{ post.postTitle }}</span></a
+      >
+      <br />
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
