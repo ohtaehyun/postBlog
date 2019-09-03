@@ -1,0 +1,29 @@
+html,
+body {
+  overflow-x: hidden;
+}
+* {
+  padding: 0;
+}
+.container {
+  margin: 0;
+}
+.container-fluid {
+  padding: 0;
+  background-color: black;
+}
+.header {
+  background-color: peru;
+  height: 80px;
+}
+
+.nav {
+  padding-top: 80px;
+  background-color: orange;
+  height: 100vh;
+}
+
+.main {
+  background-color: tomato;
+  height: 100vh;
+}
