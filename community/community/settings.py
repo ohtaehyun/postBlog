@@ -25,12 +25,14 @@ SECRET_KEY = '6f!i9=d)bdx8y+(pk6336u2(g+47uz6c7wh9t*_)6%^^5(jkgw'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'board',
-    'comuUser'
+    'comuUser',
+    'consumer',
 ]
 
 MIDDLEWARE = [
@@ -122,7 +125,16 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     "/comuUser/static/",
-    "/board/static"
+    "/board/static",
+    "/consumer/static"
 ]
-
+ASGI_APPLICATION = 'community.routing.application'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}

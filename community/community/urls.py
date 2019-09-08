@@ -7,5 +7,6 @@ from board import views as boardViews
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("board.urls", namespace='key')),
-    path('comuUser/', include("comuUser.urls"))
+    path('comuUser/', include("comuUser.urls")),
+    path('catchmind/', include('consumer.urls'))
 ]
