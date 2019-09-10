@@ -1,48 +1,9 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.http import HttpResponseRedirect
 from django.contrib.auth.hashers import check_password
 from comuUser.models import CommuUser
 from .models import post, category, comment
-
-# Create your views here.
-
-
-def postDetail(request, postId):
-
-    msg = {}
-    cate_list = category.objects.all()
-    po = post.objects.get(postId=postId)
-    co_list = comment.objects.filter(targetPost=po)
-
-    author = po.author
-    po.name = CommuUser.objects.get(id=author.id).userName
-
-    for com in co_list:
-        commentAuthor = com.author
-        com.name = CommuUser.objects.get(id=commentAuthor.id).userName
-
-    if request.session.get('user'):
-        msg['msg'] = request.session['user']
-        user = CommuUser.objects.get(id=request.session['user'])
-        msg['name'] = user.userName
-
-    msg['cate_list'] = cate_list
-    msg['post'] = po
-    msg['comment_list'] = co_list
-    if request.method == "POST":
-        if request.POST.get("commentContent"):
-            co = comment(
-                commentContent=request.POST.get("commentContent"),
-                targetPost=post.objects.get(postId=postId),
-                author=CommuUser.objects.get(userName=msg['name'])
-            )
-            co.save()
-            return redirect(request.get_full_path())
-            # return render(request, 'postDetail.html', msg)
-        else:
-            msg['error'] = "내용을 적으십쇼 HUMAN"
-
-    return render(request, 'postDetail.html', msg)
+from django.views.generic import DetailView
 
 
 def addPost(request):
@@ -64,7 +25,7 @@ def addPost(request):
                 )
                 po.save()
 
-                return redirect('/study')
+                return redirect('/posts/18')
             else:
                 msg['error'] = "항목을 모두 입력하십쇼 HUMAN"
                 return render(request, "addPost.html", msg)
@@ -90,7 +51,7 @@ def addCategory(request):
                     categoryName=categoryName
                 )
                 cate.save()
-                return redirect('/study')
+                return redirect('/posts/18')
             else:
                 msg['error'] = "항목을 입력 하십쇼"
                 return render(request, 'addCategory.html', msg)
@@ -114,40 +75,22 @@ def review(request):
         msg['name'] = user.userName
     return render(request, "review.html", msg)
 
-# not using anymore
-# def study(request):
-#     msg = {}
-#     cate_list = category.objects.all()
-#     if request.session.get('user'):
-#         msg['msg'] = request.session['user']
-#         user = CommuUser.objects.get(id=request.session['user'])
-#         msg['name'] = user.userName
-#     msg['cate_list'] = cate_list
-#     return render(request, "study.html", msg)
 
+class postList(DetailView):
+    model = category
+    template_name = "getPosts.html"
 
-def getPosts(request, key=18):
-    msg = {}
-    post_list = post.objects.filter(categoryId=key)
-    cate_list = category.objects.all()
-    if post_list:
-        for posts in post_list:
-            author = posts.author
-            posts.name = CommuUser.objects.get(id=author.id).userName
-        print(author)
-
-        msg['posts'] = post_list
-    else:
-        msg['error'] = "OOPS! NO POST IN THIS CATEGORY"
-        pass
-    if request.session.get('user'):
-        msg['msg'] = request.session['user']
-        user = CommuUser.objects.get(id=request.session['user'])
-        msg['name'] = user.userName
-    msg['cate_list'] = cate_list
-    msg['cate_key'] = key
-
-    return render(request, "getPosts.html", msg)
+    def get_context_data(self, ** kwargs):
+        context = super().get_context_data(**kwargs)
+        cate = self.get_object()
+        cate_list = category.objects.all()
+        context["cate_list"] = cate_list
+        context["posts"] = get_list_or_404(post, categoryId=cate)
+        if self.request.session.get('user') is not None:
+            context['msg'] = self.request.session['user']
+            user = CommuUser.objects.get(id=self.request.session['user'])
+            context['name'] = user.userName
+        return context
 
 
 def home(request):
@@ -156,13 +99,14 @@ def home(request):
         msg['msg'] = request.session['user']
         user = CommuUser.objects.get(id=request.session['user'])
         msg['name'] = user.userName
-    # else:
-    #     msg['name'] = "unidentified"
 
     return render(request, "home.html", msg)
 
 
 def signIn(request):
+    if request.session.get('user'):
+        return redirect("/home")
+
     if request.method == "POST":
         userName = request.POST.get('userName', None)
         userEmail = request.POST.get('userEmail', None)
@@ -178,6 +122,7 @@ def signIn(request):
 
         if check_password(userPassword, user.userPassword):
             request.session['user'] = user.id
+            user = CommuUser.objects.get(id=request.session['user'])
             request.session['name'] = user.userName
             return redirect("/home")
         else:
@@ -187,8 +132,34 @@ def signIn(request):
         return render(request, 'signIn.html')
 
 
-# def error_404(request, ex):
-#     data = {}
-#     data['exception'] = 'exception'
+class postDetail(DetailView):
+    model = post
+    template_name = "postDetail.html"
 
-#     return render(request, "404.html", data)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        co_list = comment.objects.filter(
+            targetPost=self.get_object())
+        if self.request.session.get('user') is not None:
+            context["msg"] = self.request.session['user']
+            context["name"] = self.request.session['name']
+
+        for com in co_list:
+            commentAuthor = com.author
+            com.name = CommuUser.objects.get(id=commentAuthor.id).userName
+
+        context["comment_list"] = co_list
+        context['cate_list'] = category.objects.all()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        if self.request.POST.get("commentContent"):
+            name = self.request.session['name']
+            co = comment(
+                commentContent=self.request.POST.get("commentContent"),
+                targetPost=post.objects.get(postId=self.get_object().postId),
+                author=CommuUser.objects.get(
+                    userName=name)
+            )
+            co.save()
+        return redirect(request.get_full_path())

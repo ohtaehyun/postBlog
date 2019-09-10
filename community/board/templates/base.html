@@ -28,7 +28,7 @@
           <div class="">
             <ul class="nav mr-auto">
               <li class="nav-item">
-                <a class="nav-link" href="/study">Post</a>
+                <a class="nav-link" href="{% url 'board:key' 18 %}">Post</a>
               </li>
               {% if name %}
               <li class="nav-item">
@@ -65,5 +65,7 @@
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
       crossorigin="anonymous"
     ></script>
+    {% block script %}
+    {% endblock  %}
   </body>
 </html>

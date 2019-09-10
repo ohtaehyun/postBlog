@@ -15,7 +15,7 @@
 <div class="divider"></div>
 
 <div class="post-content">
-  <h1>{{ post.postContent }}</h1>
+  {{ post.postContent|safe }}
 </div>
 
 <br />
@@ -36,12 +36,13 @@
   </div>
   <br />
   <br/>
-  {% endif %} {% for comment in comment_list %}
+  {% endif %}
+  {% for comment in comment_list %}
   <div class="comment">
     <h6 class="comment-content">{{ comment.commentContent }}</h6>
     <div class="meta">
       <p class=" comment-meta">
-        {{ comment.name }} &nbsp {{ comment.postedTime }} commented
+      {{ comment.postedTime }} &nbsp{{ comment.name }} commented
       </p>
     </div>
     <div class="divider"></div>

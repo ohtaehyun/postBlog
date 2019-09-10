@@ -8,13 +8,13 @@ app_name = "board"
 urlpatterns = [
     path('', views.signIn),
     path('home', views.home),
-    path('study/', views.getPosts, name='key'),
-    path('study/(?cate<int:key>)', views.getPosts, name='key'),
-    path('post/(?postId<int:postId>)', views.postDetail, name='postId'),
+    path('posts', views.postList.as_view(), name='key'),
+    path('posts/<int:pk>', views.postList.as_view(), name='key'),
+    path('post/<int:pk>', views.postDetail.as_view(), name='postId'),
     path('review', views.review),
     path('signOut', views.signOut),
     path('signIn', views.signIn),
-    path('study/addCategory', views.addCategory),
-    path('study/addPost', views.addPost)
+    path('posts/addCategory', views.addCategory),
+    path('posts/addPost', views.addPost)
 ]
 # handler404 = views.error_404

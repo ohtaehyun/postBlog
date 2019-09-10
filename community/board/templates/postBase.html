@@ -9,8 +9,8 @@
         {% url 'board:key' cate.categoryId %}">{{cate.categoryName}}</a>
       {% endfor %}
       {% ifequal name "othdev95" %}
-        <a class="nav-link" href="addCategory">Add Category</a>
-        <a class="nav-link" href="addPost">Add Post</a>
+        <a class="nav-link" href="/posts/addCategory">Add Category</a>
+        <a class="nav-link" href="/posts/addPost">Add Post</a>
       {% endifequal %}
       </nav>
     </div>
