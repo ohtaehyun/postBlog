@@ -166,4 +166,11 @@ class postDetail(DetailView):
 
 
 def trolo(request):
-    return render(request, 'trolo.html')
+    msg = {}
+    if request.session.get('user'):
+        print("!!!!!!!!!!!!!!!!!!!!!")
+        msg['msg'] = request.session['user']
+        user = CommuUser.objects.get(id=request.session['user'])
+        msg['name'] = user.userName
+
+    return render(request, 'trolo.html', msg)
