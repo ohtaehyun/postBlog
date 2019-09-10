@@ -25,7 +25,7 @@ def addPost(request):
                 )
                 po.save()
 
-                return redirect('/posts/18')
+                return redirect('/posts/1')
             else:
                 msg['error'] = "항목을 모두 입력하십쇼 HUMAN"
                 return render(request, "addPost.html", msg)
@@ -51,7 +51,7 @@ def addCategory(request):
                     categoryName=categoryName
                 )
                 cate.save()
-                return redirect('/posts/18')
+                return redirect('/posts/1')
             else:
                 msg['error'] = "항목을 입력 하십쇼"
                 return render(request, 'addCategory.html', msg)
