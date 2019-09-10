@@ -32,7 +32,6 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '*']
 
 INSTALLED_APPS = [
 
-    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'board',
     'comuUser',
-    'consumer',
 ]
 
 MIDDLEWARE = [
@@ -124,17 +122,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    "/comuUser/static/",
+    "/comuUser/static",
     "/board/static",
-    "/consumer/static"
 ]
-ASGI_APPLICATION = 'community.routing.application'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
-        },
-    },
-}

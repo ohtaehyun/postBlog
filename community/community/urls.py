@@ -8,5 +8,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("board.urls", namespace='key')),
     path('comuUser/', include("comuUser.urls")),
-    path('catchmind/', include('consumer.urls'))
 ]
