@@ -2,4 +2,9 @@ myve
 *.log
 *.a
 .vscode
+*.pyc
+*.swo
+*.swp
+*.swn
+db.sqlite3
 /community/community/settings.py
