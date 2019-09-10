@@ -15,6 +15,7 @@ urlpatterns = [
     path('signOut', views.signOut),
     path('signIn', views.signIn),
     path('posts/addCategory', views.addCategory),
-    path('posts/addPost', views.addPost)
+    path('posts/addPost', views.addPost),
+    path('trolo', views.trolo)
 ]
 # handler404 = views.error_404

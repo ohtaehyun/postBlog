@@ -163,3 +163,7 @@ class postDetail(DetailView):
             )
             co.save()
         return redirect(request.get_full_path())
+
+
+def trolo(request):
+    return render(request, 'trolo.html')
