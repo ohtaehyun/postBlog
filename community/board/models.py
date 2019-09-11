@@ -28,3 +28,16 @@ class comment(models.Model):
         "comuUser.CommuUser", verbose_name="작성자", on_delete=models.CASCADE)
     postedTime = models.DateField(verbose_name="작성일", auto_now_add=True)
     editedTime = models.DateField(verbose_name="수정일", auto_now=True)
+
+
+class troloList(models.Model):
+    listTitle = models.TextField(max_length="32", verbose_name="리스트 제목")
+    author = models.ForeignKey(
+        "comuUser.CommuUser", verbose_name="작성자", on_delete=models.CASCADE)
+
+
+class troloCard(models.Model):
+    cardTitle = models.TextField(max_length="32", verbose_name="카드 제목")
+    cardDescription = models.TextField(max_length="150", verbose_name="카드 설명")
+    targetList = models.ForeignKey(
+        "troloList", verbose_name="타겟 리스트", on_delete=models.CASCADE)

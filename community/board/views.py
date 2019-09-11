@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.hashers import check_password
 from comuUser.models import CommuUser
-from .models import post, category, comment
+from .models import post, category, comment, troloCard, troloList
 from django.views.generic import DetailView
 
 
@@ -88,8 +88,7 @@ class postList(DetailView):
         context["posts"] = get_list_or_404(post, categoryId=cate)
         if self.request.session.get('user') is not None:
             context['msg'] = self.request.session['user']
-            user = CommuUser.objects.get(id=self.request.session['user'])
-            context['name'] = user.userName
+            context['name'] = self.request.session['name']
         return context
 
 
@@ -97,8 +96,7 @@ def home(request):
     msg = {}
     if request.session.get('user'):
         msg['msg'] = request.session['user']
-        user = CommuUser.objects.get(id=request.session['user'])
-        msg['name'] = user.userName
+        msg['name'] = request.session['name']
 
     return render(request, "home.html", msg)
 
@@ -165,12 +163,39 @@ class postDetail(DetailView):
         return redirect(request.get_full_path())
 
 
-def trolo(request):
+def troloTest(request):
     msg = {}
     if request.session.get('user'):
-        print("!!!!!!!!!!!!!!!!!!!!!")
-        msg['msg'] = request.session['user']
         user = CommuUser.objects.get(id=request.session['user'])
-        msg['name'] = user.userName
 
-    return render(request, 'trolo.html', msg)
+        if request.method == 'GET':
+            msg['msg'] = user.userName
+            msg['name'] = user.id
+            tList = troloList.objects.filter(author=user)
+            if tList.count() > 0:
+                msg['tList'] = tList
+                cList = []
+                for t in tList:
+                    cards = troloCard.objects.filter(targetList=t)
+                    data = {
+                        "listTitle": t.listTitle,
+                        "cards": cards
+                    }
+                    cList.append(data)
+                msg['cList'] = cList
+            return render(request, 'troloTest.html', msg)
+        elif request.method == 'POST':
+            print("In Post")
+            action = request.POST['action']
+            if action == "addList":
+                newList = troloList(
+                    listTitle="something",
+                    author=user
+                )
+                newList.save()
+                return HttpResponse(newList.id)
+            # msg['cList'] = troloList.objects.filter(author=user)
+            return redirect("/troloTest")
+            # return render(request, 'troloTest.html', msg)
+    else:
+        return render(request, 'trolo.html', msg)

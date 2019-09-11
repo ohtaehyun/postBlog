@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import category, post, comment
+from .models import category, post, comment, troloCard, troloList
 # Register your models here.
 
 
@@ -24,3 +24,18 @@ class commentAdmin(admin.ModelAdmin):
 
 
 admin.site.register(comment, commentAdmin)
+
+
+class troloListAdmin(admin.ModelAdmin):
+    list_display = ['listTitle', 'author']
+
+
+admin.site.register(troloList, troloListAdmin)
+
+
+class troloCardAdmin(admin.ModelAdmin):
+    list_display = ['cardTitle', 'cardDescription',
+                    'targetList']
+
+
+admin.site.register(troloCard, troloCardAdmin)

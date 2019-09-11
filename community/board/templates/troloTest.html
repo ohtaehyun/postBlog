@@ -1,0 +1,25 @@
+{% extends 'base.html' %} {% block content %} {% load static %}
+<link rel="stylesheet" href="{% static 'trolo.css' %}" />
+<div class="wrapper">
+  <button class="add-list-btn">Add List</button>
+  <div class="row1">
+    {% if cList %} {% for list in cList %}
+    <div class="bubble">
+      <div class="bubble-title" droppable="true">
+        <input type="text" name="" id="" value="{{ list.listTitle }}" />
+        <button class="drop-btn">=</button>
+        <div class="drops display-none">
+          <button class="add-card" href="">Add Card</button>
+          <button class="del-list" href="">Del List</button>
+        </div>
+      </div>
+      <div class="bubble-content"></div>
+    </div>
+    {% endfor %} {% endif %}
+  </div>
+</div>
+<script>
+  const CSRF_TOKEN = "{{csrf_token}}";
+</script>
+<script src="{% static 'troloTest.js' %}"></script>
+{% endblock %}
