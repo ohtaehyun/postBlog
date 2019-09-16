@@ -231,6 +231,7 @@ function cardTextBlured(event) {
       xhr.setRequestHeader("X-CSRFToken", CSRF_TOKEN);
     }
   });
+  card.addEventListener("click", cardClicked);
 }
 
 function addCardClicked(event) {
@@ -281,7 +282,6 @@ function drawNewCard(listId, cardId) {
   const card = document.createElement(ELEMENT_DIV);
   card.classList.add(CLASS_CARD);
   card.setAttribute(ATTR_CARD_ID, cardId);
-  card.addEventListener("click", cardClicked);
 
   const cardText = document.createElement(ELEMENT_TEXT_AREA);
   cardText.classList.add(CLASS_CARD_TEXT);
