@@ -37,7 +37,6 @@ const ATTR_CARD_ID = "card-id";
 
 function delCardBtnClicked(event) {
   cardId = this.getAttribute(ATTR_CARD_ID);
-  console.log(cardId);
   $.ajax({
     url: "/troloTest",
     type: "DELETE",
@@ -167,7 +166,6 @@ function drawNewModal(titleText, descriptionText, listTitle, cardId) {
 
 function cardClicked(event) {
   cardId = this.getAttribute(ATTR_CARD_ID);
-  console.log(cardId);
   $.ajax({
     url: "/troloTest",
     type: "GET",
@@ -199,13 +197,9 @@ function delListBtnClicked(event) {
 }
 
 function listTitleBlured(event) {
-  if (this.value === undefined) {
-    console.log("Dude");
-  }
   $.ajax({
     url: "/troloTest",
     type: "PUT",
-    async: false,
     data: {
       action: "listTitleUpdate",
       listId: this.getAttribute(ATTR_LIST_ID),
@@ -317,6 +311,7 @@ function drawNewBubble(bubbleId) {
   const bubbleTitleInput = document.createElement(ELEMENT_INPUT);
   bubbleTitleInput.setAttribute(ATTR_TYPE, "text");
   bubbleTitleInput.value = "something";
+  bubbleTitleInput.setAttribute(ATTR_LIST_ID, bubbleId);
   bubbleTitleInput.addEventListener("blur", listTitleBlured);
 
   const dropBtn = document.createElement(ELEMENT_BTN);
