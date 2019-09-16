@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'board',
     'comuUser',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [

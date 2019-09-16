@@ -11,6 +11,7 @@ body {
 }
 p {
   overflow-wrap: break-word;
+  margin: 0;
 }
 
 .modal input {

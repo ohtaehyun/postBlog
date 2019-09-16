@@ -4,16 +4,35 @@
   <button class="add-list-btn">Add List</button>
   <div class="row1">
     {% if cList %} {% for list in cList %}
-    <div class="bubble">
+    <div class="bubble " id="{{ list.id }}">
       <div class="bubble-title" droppable="true">
-        <input type="text" name="" id="" value="{{ list.listTitle }}" />
+        <input
+          type="text"
+          listId="{{ list.id }}"
+          value="{{ list.listTitle }}"
+        />
         <button class="drop-btn">=</button>
         <div class="drops display-none">
-          <button class="add-card" href="">Add Card</button>
-          <button class="del-list" href="">Del List</button>
+          <button class="add-card" href="" listId="{{ list.id }}">
+            Add Card
+          </button>
+          <button class="del-list" href="" listId="{{ list.id }}">
+            Del List
+          </button>
         </div>
       </div>
-      <div class="bubble-content"></div>
+      <div class="bubble-content" listId="{{ list.id }}">
+        {% for card in list.cards %}
+        <div
+          draggable="true"
+          droppable="true"
+          class="card"
+          card-id="{{ card.id }}"
+        >
+          <p class="card-text" name="" id="">{{ card.cardTitle }}</p>
+        </div>
+        {% endfor %}
+      </div>
     </div>
     {% endfor %} {% endif %}
   </div>

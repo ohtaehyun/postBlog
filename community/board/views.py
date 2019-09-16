@@ -4,6 +4,10 @@ from django.contrib.auth.hashers import check_password
 from comuUser.models import CommuUser
 from .models import post, category, comment, troloCard, troloList
 from django.views.generic import DetailView
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+import json
 
 
 def addPost(request):
@@ -163,6 +167,7 @@ class postDetail(DetailView):
         return redirect(request.get_full_path())
 
 
+@api_view(['GET', 'POST', 'PUT', 'DELETE'])
 def troloTest(request):
     msg = {}
     if request.session.get('user'):
@@ -171,6 +176,16 @@ def troloTest(request):
         if request.method == 'GET':
             msg['msg'] = user.userName
             msg['name'] = user.id
+            if request.GET.get('action') is not None:
+                action = request.GET['action']
+                if action == "getCard":
+                    card = troloCard.objects.get(id=request.GET['cardId'])
+                    data = {
+                        'cardTitle': card.cardTitle,
+                        'cardDescription': card.cardDescription,
+                        'listTitle': card.targetList.listTitle
+                    }
+                    return HttpResponse(json.dumps(data))
             tList = troloList.objects.filter(author=user)
             if tList.count() > 0:
                 msg['tList'] = tList
@@ -179,13 +194,13 @@ def troloTest(request):
                     cards = troloCard.objects.filter(targetList=t)
                     data = {
                         "listTitle": t.listTitle,
-                        "cards": cards
+                        "cards": cards,
+                        "id": t.id
                     }
                     cList.append(data)
                 msg['cList'] = cList
             return render(request, 'troloTest.html', msg)
         elif request.method == 'POST':
-            print("In Post")
             action = request.POST['action']
             if action == "addList":
                 newList = troloList(
@@ -194,8 +209,54 @@ def troloTest(request):
                 )
                 newList.save()
                 return HttpResponse(newList.id)
+            elif action == "addCard":
+                listId = request.POST['listId']
+                newCard = troloCard(
+                    cardTitle="something to do",
+                    cardDescription="Description here",
+                    targetList=troloList.objects.get(id=listId)
+                )
+                newCard.save()
+                return HttpResponse(newCard.id)
             # msg['cList'] = troloList.objects.filter(author=user)
             return redirect("/troloTest")
             # return render(request, 'troloTest.html', msg)
+        elif request.method == "PUT":
+            action = request.data['action']
+            if action == "cardTitleUpdate":
+                print(request.data['cardId'])
+                card = get_object_or_404(troloCard, id=request.data['cardId'])
+                if request.data['data'] is None:
+                    return render(request, 'troloTest.html', msg)
+                card.cardTitle = request.data['data']
+                card.save()
+                return render(request, 'troloTest.html', msg)
+            elif action == "listTitleUpdate":
+                listObject = get_object_or_404(
+                    troloList, id=request.data['listId'])
+                listObject.listTitle = request.data['listTitle']
+                listObject.save()
+                return render(request, 'troloTest.html', msg)
+            elif action == "cardDescUpdate":
+                card = get_object_or_404(troloCard, id=request.data['cardId'])
+                if request.data['data'] is None:
+                    return render(request, 'troloTest.html', msg)
+                card.cardDescription = request.data['data']
+                card.save()
+                return render(request, 'troloTest.html', msg)
+        elif request.method == "DELETE":
+            action = request.data['action']
+            if action == "listDelete":
+                listObject = get_object_or_404(
+                    troloList, id=request.data['listId']
+                )
+                listObject.delete()
+                return render(request, 'troloTest.html', msg)
+            elif action == "cardDelete":
+                print("??")
+                card = get_object_or_404(troloCard, id=request.data['cardId'])
+                card.delete()
+                return render(request, 'troloTest.html', msg)
+
     else:
         return render(request, 'trolo.html', msg)
