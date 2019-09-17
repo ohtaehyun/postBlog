@@ -224,7 +224,6 @@ def troloTest(request):
         elif request.method == "PUT":
             action = request.data['action']
             if action == "cardTitleUpdate":
-                print(request.data['cardId'])
                 card = get_object_or_404(troloCard, id=request.data['cardId'])
                 if request.data['data'] is None:
                     return render(request, 'troloTest.html', msg)
@@ -253,7 +252,6 @@ def troloTest(request):
                 listObject.delete()
                 return render(request, 'troloTest.html', msg)
             elif action == "cardDelete":
-                print("??")
                 card = get_object_or_404(troloCard, id=request.data['cardId'])
                 card.delete()
                 return render(request, 'troloTest.html', msg)
